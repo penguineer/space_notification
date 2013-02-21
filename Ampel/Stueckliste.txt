@@ -1,0 +1,11 @@
+Auszug Reichelt-Bestellung 2013-02-17
+
+* 2x [[http://www.mikrocontroller.net/articles/Konstantstromquelle_fuer_Power_LED|LED-Steuerung]]
+  * [[http://www.reichelt.de/index.html?ARTICLE=108126|MC 34063 AP]] – Regulator, DIP 8
+  * [[http://www.reichelt.de/index.html?ARTICLE=16010|SB 120]] – Schottky Diode, DO41, 20V, 1A
+  * [[http://www.reichelt.de/index.html?ARTICLE=73207|L-PIS4728 470µ]] – SMD-Power-Induktivität, PIS4728, Ferrit, 470µ
+  * [[http://www.reichelt.de/index.html?ARTICLE=57212|RD 100/0,30]] – 100g Widerstandsdraht, Ø 0,30mm
+  * [[http://www.reichelt.de/index.html?ARTICLE=121281|RAD FR 68/35]] – Elko radial, 105°C, low ESR, RM 2,5mm
+* [[http://www.reichelt.de/index.html?ARTICLE=96847|LED H3WMA GN]] – High Power 3W LED-Modul 100 lm grün
+* [[http://www.reichelt.de/index.html?ARTICLE=96838|LED H1WMG PWS]] – High Power 1W LED-Modul 105 lm pur-weiß
+* 3x [[http://www.reichelt.de/index.html?ARTICLE=101005|V SK 578-15 SA]] – LED Kühlkörperdisc Ø 60 x 15 mm
