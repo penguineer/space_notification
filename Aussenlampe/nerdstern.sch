@@ -8249,6 +8249,7 @@ Siemens, Hewlett-Packard, Texas Instuments, Sharp, Motorola&lt;p&gt;
 <pinref part="K1" gate="2" pin="S"/>
 <wire x1="22.86" y1="50.8" x2="22.86" y2="60.96" width="0.1524" layer="91"/>
 <junction x="10.16" y="78.74"/>
+<junction x="22.86" y="60.96"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -8267,12 +8268,11 @@ Siemens, Hewlett-Packard, Texas Instuments, Sharp, Motorola&lt;p&gt;
 <pinref part="X1" gate="-1" pin="KL"/>
 <wire x1="22.86" y1="83.82" x2="20.32" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="83.82" x2="10.16" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="10.16" y1="38.1" x2="20.32" y2="38.1" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="38.1" x2="20.32" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="20.32" y1="27.94" x2="20.32" y2="83.82" width="0.1524" layer="91"/>
 <junction x="20.32" y="83.82"/>
-<pinref part="X2" gate="-1" pin="KL"/>
 <junction x="10.16" y="83.82"/>
-<junction x="10.16" y="38.1"/>
+<pinref part="X2" gate="-3" pin="KL"/>
+<wire x1="20.32" y1="27.94" x2="10.16" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$4" class="0">
@@ -8342,10 +8342,10 @@ Siemens, Hewlett-Packard, Texas Instuments, Sharp, Motorola&lt;p&gt;
 <segment>
 <pinref part="X1" gate="-3" pin="KL"/>
 <wire x1="10.16" y1="73.66" x2="15.24" y2="73.66" width="0.1524" layer="91"/>
-<wire x1="15.24" y1="73.66" x2="15.24" y2="27.94" width="0.1524" layer="91"/>
-<pinref part="X2" gate="-3" pin="KL"/>
-<wire x1="15.24" y1="27.94" x2="10.16" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="73.66" x2="15.24" y2="38.1" width="0.1524" layer="91"/>
 <junction x="10.16" y="73.66"/>
+<pinref part="X2" gate="-1" pin="KL"/>
+<wire x1="10.16" y1="38.1" x2="15.24" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$10" class="0">
