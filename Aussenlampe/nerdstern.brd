@@ -72,7 +72,7 @@
 <hole x="50" y="5" drill="2"/>
 <hole x="50" y="45" drill="2"/>
 <hole x="10" y="45" drill="2"/>
-<text x="9" y="27" size="1.778" layer="16" font="vector" rot="MR270">netz39_nerdlicht
+<text x="5" y="26" size="1.778" layer="16" font="vector" rot="SR270">n39_nerdlicht
 CC-BY-SA netz39</text>
 </plain>
 <libraries>
