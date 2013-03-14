@@ -12946,7 +12946,7 @@ naming: grid - package width</description>
 <part name="C3" library="capacitor-wima" deviceset="C" device="5/2.5" value="100n"/>
 <part name="D1" library="diode" deviceset="SCHOTTKY-DIODE" device="DO35-7" value="MBRS240"/>
 <part name="R2" library="resistor" deviceset="R-EU_" device="0207/10" value="47R"/>
-<part name="R_SENSE" library="resistor" deviceset="R-EU_" device="0207/10" value="0.22R"/>
+<part name="R_SENSE" library="resistor" deviceset="R-EU_" device="0207/10" value="0.18R"/>
 <part name="L1" library="inductors" deviceset="DR1030" device="" value="220µ"/>
 <part name="LED" library="pinhead" deviceset="PINHD-1X2" device="" value="3W"/>
 </parts>
@@ -12961,10 +12961,10 @@ naming: grid - package width</description>
 <instance part="SV1" gate="G$1" x="2.54" y="-2.54" rot="R90"/>
 <instance part="C1" gate="G$1" x="43.18" y="22.86"/>
 <instance part="R1" gate="G$1" x="-5.08" y="22.86"/>
-<instance part="SUPPLY2" gate="G$1" x="17.78" y="2.54"/>
-<instance part="GND2" gate="1" x="38.1" y="-10.16"/>
-<instance part="C2" gate="G$1" x="22.86" y="-2.54"/>
-<instance part="C3" gate="G$1" x="30.48" y="-2.54"/>
+<instance part="SUPPLY2" gate="G$1" x="17.78" y="10.16"/>
+<instance part="GND2" gate="1" x="38.1" y="-2.54"/>
+<instance part="C2" gate="G$1" x="22.86" y="5.08"/>
+<instance part="C3" gate="G$1" x="30.48" y="5.08"/>
 <instance part="D1" gate="G$1" x="43.18" y="45.72" rot="R90"/>
 <instance part="R2" gate="G$1" x="-5.08" y="30.48"/>
 <instance part="R_SENSE" gate="G$1" x="-5.08" y="43.18"/>
@@ -12978,10 +12978,10 @@ naming: grid - package width</description>
 <segment>
 <pinref part="SUPPLY2" gate="G$1" pin="VCC"/>
 <pinref part="C2" gate="G$1" pin="+"/>
-<wire x1="17.78" y1="0" x2="22.86" y2="0" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="7.62" x2="22.86" y2="7.62" width="0.1524" layer="91"/>
 <pinref part="C3" gate="G$1" pin="1"/>
-<wire x1="22.86" y1="0" x2="30.48" y2="0" width="0.1524" layer="91"/>
-<junction x="22.86" y="0"/>
+<wire x1="22.86" y1="7.62" x2="30.48" y2="7.62" width="0.1524" layer="91"/>
+<junction x="22.86" y="7.62"/>
 </segment>
 <segment>
 <pinref part="R_SENSE" gate="G$1" pin="1"/>
@@ -13040,10 +13040,10 @@ naming: grid - package width</description>
 <segment>
 <pinref part="C2" gate="G$1" pin="-"/>
 <pinref part="C3" gate="G$1" pin="2"/>
-<wire x1="22.86" y1="-7.62" x2="30.48" y2="-7.62" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="0" x2="30.48" y2="0" width="0.1524" layer="91"/>
 <pinref part="GND2" gate="1" pin="GND"/>
-<wire x1="30.48" y1="-7.62" x2="38.1" y2="-7.62" width="0.1524" layer="91"/>
-<junction x="30.48" y="-7.62"/>
+<wire x1="30.48" y1="0" x2="38.1" y2="0" width="0.1524" layer="91"/>
+<junction x="30.48" y="0"/>
 </segment>
 </net>
 <net name="N$1" class="0">
