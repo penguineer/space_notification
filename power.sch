@@ -9504,7 +9504,7 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="SUPPLY6" library="supply2" deviceset="VCC" device=""/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="C2" library="resistor" deviceset="C-EU" device="025-024X044" value="0.1µ"/>
-<part name="C3" library="resistor" deviceset="CPOL-EU" device="E5-4" value="470µ"/>
+<part name="C3" library="resistor" deviceset="CPOL-EU" device="E5-4" value="47µ"/>
 <part name="D1" library="diode" deviceset="1N4004" device=""/>
 <part name="D2" library="diode" deviceset="1N4004" device=""/>
 <part name="IC2" library="linear" deviceset="78*" device="TV" technology="05"/>
