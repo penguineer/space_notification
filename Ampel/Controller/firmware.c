@@ -24,19 +24,20 @@ const int COLOR_GREEN = 2;
 volatile char current_color;
 volatile char is_blink;
 
-inline void setColor(const char col, const char blink) {
-  current_color = col;
-  is_blink = blink;
-  switch_color(col);
-}
-
-inline void switch_color(const char col) {
+inline void switch_color(char col) {
    setPortB(0b11);
    if (col == COLOR_RED) 
      resetPortB(0b01);
    if (col == COLOR_GREEN) 
      resetPortB(0b10);
 }
+
+inline void setColor(const char col, const char blink) {
+  current_color = col;
+  is_blink = blink;
+  //switch_color(col);
+}
+
 
 
 void init(void) {
@@ -56,16 +57,23 @@ void init(void) {
    */
   PORTB = 0b11111111;
    
-  /*
-   * Timer-Code nach http://www.mikrocontroller.net/articles/AVR-GCC-Tutorial/Die_Timer_und_Z%C3%A4hler_des_AVR#8-Bit_Timer.2FCounter
-   */
+   /*  disable interrupts  */
+   cli();
   
-  // Timer 1 konfigurieren - FIXME korrekt setzen!
-  TCCR1 = (1<<CS02)+(0<<CS01)+(0<<CS00); // Prescaler 256
- 
-  // Overflow Interrupt erlauben
-  TIMSK |= (1<<TOIE0); 
-  
+   /*  set clock   */
+  CLKPR = (1 << CLKPCE);  /*  enable clock prescaler update       */
+  CLKPR = 0;              /*  set clock to maximum                */
+
+  /*  timer init  */
+  TIFR &= ~(1 << TOV0);   /*  clear timer0 overflow interrupt flag    */
+  TIMSK |= (1 << TOIE0);  /*  enable timer0 overflow interrupt        */
+
+  /*  start timer0 by setting last 3 bits in timer0 control register B
+   *  to any clock source */
+  //TCCR0B = (1 << CS02) | (1 << CS00);
+  TCCR0B = (1 << CS00);
+
+    
   // Global Interrupts aktivieren
   sei();  
   
@@ -98,36 +106,23 @@ int main(void)
    else if (green)
      setColor(COLOR_GREEN, blink);
    else
-     setColor(COLOR_NONE, 0);
+     setColor(COLOR_NONE, blink);
    
   }
         
   return 0;
 }
 
-/*
- * Timer-Code nach http://www.mikrocontroller.net/articles/AVR-GCC-Tutorial/Die_Timer_und_Z%C3%A4hler_des_AVR#8-Bit_Timer.2FCounter
- */
+const int TCOUNT_MAX = 24;
+volatile int tcount = 0;
+volatile char blink = 0;
+volatile char red = 0;
 
-/*
- * Der Overflow Interrupt Handler
- * wird aufgerufen, wenn TCNT0 von
- * 255 auf 0 wechselt (256 Schritte),
- * d.h. ca. alle 2 ms
- */
-#ifndef TIMER0_OVF_vect
-// Für ältere WinAVR Versionen z.B. WinAVR-20071221 
-#define TIMER0_OVF_vect TIMER0_OVF0_vect
-#endif
- 
-/* 
- * Interrupt-Aktion bei Timer-Überlauf
- */
-ISR (TIMER1_OVF_vect)
+ISR (TIMER0_OVF_vect)
 {
-  switch_color(current_color);
-  // ggf. blinken
-  
-  // Counter hochsetzen, wir wollen keinen ganzen Zyklus warten
-  TCNT1 = 0;
+  if (++tcount > TCOUNT_MAX) {
+    tcount = 0;
+    blink = !blink;
+    switch_color(is_blink && !blink ? COLOR_NONE : current_color);
+  }
 }
