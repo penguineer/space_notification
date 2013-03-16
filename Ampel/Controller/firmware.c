@@ -89,10 +89,6 @@ int main(void)
     * int val = (b>>1)&0xF;
     * darstellen!
     */
-   int val = bit_is_set(b, PB2) ? 0 : 1;
-   val += bit_is_set(b, PB3) ? 0 : 2;
-   val += bit_is_set(b, PB4) ? 0 : 4; 
-    
    char red = !bit_is_set(b, PB2);
    char green = !bit_is_set(b, PB3);
    char blink = !bit_is_set(b, PB4);
