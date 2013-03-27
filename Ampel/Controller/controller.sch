@@ -11281,70 +11281,6 @@ W = angled&lt;p&gt;
 </deviceset>
 </devicesets>
 </library>
-<library name="con-molex">
-<description>&lt;b&gt;Molex Connectors&lt;/b&gt;&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-<package name="22-23-2041">
-<description>.100" (2.54mm) Center Header - 4 Pin</description>
-<wire x1="-5.08" y1="3.175" x2="5.08" y2="3.175" width="0.254" layer="21"/>
-<wire x1="5.08" y1="3.175" x2="5.08" y2="1.27" width="0.254" layer="21"/>
-<wire x1="5.08" y1="1.27" x2="5.08" y2="-3.175" width="0.254" layer="21"/>
-<wire x1="5.08" y1="-3.175" x2="-5.08" y2="-3.175" width="0.254" layer="21"/>
-<wire x1="-5.08" y1="-3.175" x2="-5.08" y2="1.27" width="0.254" layer="21"/>
-<wire x1="-5.08" y1="1.27" x2="-5.08" y2="3.175" width="0.254" layer="21"/>
-<wire x1="-5.08" y1="1.27" x2="5.08" y2="1.27" width="0.254" layer="21"/>
-<pad name="1" x="-3.81" y="0" drill="1" shape="long" rot="R90"/>
-<pad name="2" x="-1.27" y="0" drill="1" shape="long" rot="R90"/>
-<pad name="3" x="1.27" y="0" drill="1" shape="long" rot="R90"/>
-<pad name="4" x="3.81" y="0" drill="1" shape="long" rot="R90"/>
-<text x="-5.08" y="3.81" size="1.016" layer="25" ratio="10">&gt;NAME</text>
-<text x="-5.08" y="-5.08" size="1.016" layer="27" ratio="10">&gt;VALUE</text>
-</package>
-</packages>
-<symbols>
-<symbol name="MV">
-<wire x1="1.27" y1="0" x2="0" y2="0" width="0.6096" layer="94"/>
-<text x="2.54" y="-0.762" size="1.524" layer="95">&gt;NAME</text>
-<text x="-0.762" y="1.397" size="1.778" layer="96">&gt;VALUE</text>
-<pin name="S" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
-</symbol>
-<symbol name="M">
-<wire x1="1.27" y1="0" x2="0" y2="0" width="0.6096" layer="94"/>
-<text x="2.54" y="-0.762" size="1.524" layer="95">&gt;NAME</text>
-<pin name="S" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="22-23-2041" prefix="X">
-<description>.100" (2.54mm) Center Header - 4 Pin</description>
-<gates>
-<gate name="-1" symbol="MV" x="0" y="2.54" addlevel="always" swaplevel="1"/>
-<gate name="-2" symbol="M" x="0" y="0" addlevel="always" swaplevel="1"/>
-<gate name="-3" symbol="M" x="0" y="-2.54" addlevel="always" swaplevel="1"/>
-<gate name="-4" symbol="M" x="0" y="-5.08" addlevel="always" swaplevel="1"/>
-</gates>
-<devices>
-<device name="" package="22-23-2041">
-<connects>
-<connect gate="-1" pin="S" pad="1"/>
-<connect gate="-2" pin="S" pad="2"/>
-<connect gate="-3" pin="S" pad="3"/>
-<connect gate="-4" pin="S" pad="4"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="MF" value="MOLEX" constant="no"/>
-<attribute name="MPN" value="22-23-2041" constant="no"/>
-<attribute name="OC_FARNELL" value="1462920" constant="no"/>
-<attribute name="OC_NEWARK" value="38C0355" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="pinhead">
 <description>&lt;b&gt;Pin Header Connectors&lt;/b&gt;&lt;p&gt;
 &lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
@@ -12114,6 +12050,63 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="n39">
+<packages>
+<package name="PSW_5">
+<pad name="+12V" x="-7.62" y="-6.1" drill="0.9"/>
+<pad name="GND1" x="-2.54" y="-6.1" drill="0.9"/>
+<pad name="GND2" x="2.54" y="-6.1" drill="0.9"/>
+<pad name="-5V" x="7.62" y="-6.1" drill="0.9"/>
+<wire x1="-11.6" y1="-6.1" x2="11.6" y2="-6.1" width="0.127" layer="21"/>
+<wire x1="11.6" y1="-6.1" x2="11.6" y2="6.1" width="0.127" layer="21"/>
+<wire x1="11.6" y1="6.1" x2="-11.6" y2="6.1" width="0.127" layer="21"/>
+<wire x1="-11.6" y1="6.1" x2="-11.6" y2="-6.1" width="0.127" layer="21"/>
+<hole x="-10.16" y="-4" drill="2.3"/>
+<hole x="10.16" y="-4" drill="2.3"/>
+<text x="6.35" y="-3.81" size="1.27" layer="21">-5V</text>
+<text x="-8.89" y="-3.81" size="1.27" layer="21">+12V</text>
+<text x="-3.81" y="-3.81" size="1.27" layer="21">GND1</text>
+<text x="1.27" y="-3.81" size="1.27" layer="21">GND2</text>
+</package>
+</packages>
+<symbols>
+<symbol name="PSW_5">
+<pin name="+12V" x="-7.62" y="0" length="middle" rot="R270"/>
+<pin name="GND1" x="-2.54" y="0" length="middle" rot="R270"/>
+<pin name="GND2" x="2.54" y="0" length="middle" rot="R270"/>
+<pin name="-5V" x="7.62" y="0" length="middle" rot="R270"/>
+<wire x1="-10.16" y1="0" x2="-10.16" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-10.16" y1="-5.08" x2="10.16" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="10.16" y1="-5.08" x2="10.16" y2="0" width="0.254" layer="94"/>
+<wire x1="10.16" y1="0" x2="-10.16" y2="0" width="0.254" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="PSW_5" uservalue="yes">
+<description>PSW 5
+
+Stromversorgungsstecker f. 5 1/4 Zoll, Print, gew.
+
+http://www.reichelt.de/Floppy-Powerstecker/PSW-5/3/index.html?;ACTION=3;LA=446;ARTICLE=14915;GROUPID=3257;artnr=PSW+5;SID=11UOMKs38AAAIAABbvFEc5b11be4da1ac9cc045b827e422a49e7b</description>
+<gates>
+<gate name="G$1" symbol="PSW_5" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="PSW_5">
+<connects>
+<connect gate="G$1" pin="+12V" pad="+12V"/>
+<connect gate="G$1" pin="-5V" pad="-5V"/>
+<connect gate="G$1" pin="GND1" pad="GND1"/>
+<connect gate="G$1" pin="GND2" pad="GND2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -12132,7 +12125,6 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="SV1" library="con-lstb" deviceset="MA03-2" device="" value="ISP"/>
 <part name="GND1" library="supply1" deviceset="GND" device=""/>
 <part name="SUPPLY2" library="supply2" deviceset="VCC" device=""/>
-<part name="X1" library="con-molex" deviceset="22-23-2041" device=""/>
 <part name="GND3" library="supply1" deviceset="GND" device=""/>
 <part name="SUPPLY3" library="supply2" deviceset="VCC" device=""/>
 <part name="OUT1" library="con-lstb" deviceset="MA03-1" device="" value="RED"/>
@@ -12142,7 +12134,7 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="SUPPLY6" library="supply2" deviceset="VCC" device=""/>
 <part name="GND4" library="supply1" deviceset="GND" device=""/>
 <part name="C2" library="resistor" deviceset="C-EU" device="025-024X044" value="0.1µ"/>
-<part name="C3" library="resistor" deviceset="CPOL-EU" device="E5-4" value="470µ"/>
+<part name="C3" library="resistor" deviceset="CPOL-EU" device="E5-4" value="47µ"/>
 <part name="D1" library="diode" deviceset="1N4004" device=""/>
 <part name="D2" library="diode" deviceset="1N4004" device=""/>
 <part name="X2" library="con-kycon" deviceset="KUSBVX" device=""/>
@@ -12150,6 +12142,7 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <part name="GND5" library="supply1" deviceset="GND" device=""/>
 <part name="IC2" library="linear" deviceset="78*" device="TV" technology="05"/>
 <part name="JP1" library="pinhead" deviceset="PINHD-1X2" device=""/>
+<part name="U$1" library="n39" deviceset="PSW_5" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12164,12 +12157,8 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <instance part="SV1" gate="1" x="86.36" y="58.42" rot="R180"/>
 <instance part="GND1" gate="1" x="99.06" y="50.8"/>
 <instance part="SUPPLY2" gate="G$1" x="99.06" y="63.5"/>
-<instance part="X1" gate="-1" x="93.98" y="25.4"/>
-<instance part="X1" gate="-2" x="93.98" y="22.86"/>
-<instance part="X1" gate="-3" x="93.98" y="20.32"/>
-<instance part="X1" gate="-4" x="93.98" y="17.78"/>
 <instance part="GND3" gate="1" x="81.28" y="15.24"/>
-<instance part="SUPPLY3" gate="G$1" x="88.9" y="12.7" rot="R180"/>
+<instance part="SUPPLY3" gate="G$1" x="81.28" y="27.94" rot="R90"/>
 <instance part="OUT1" gate="G$1" x="33.02" y="-5.08" rot="R90"/>
 <instance part="OUT2" gate="G$1" x="50.8" y="-5.08" rot="R90"/>
 <instance part="IN" gate="A" x="38.1" y="55.88" rot="R90"/>
@@ -12185,6 +12174,7 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 <instance part="GND5" gate="1" x="50.8" y="-35.56"/>
 <instance part="IC2" gate="A1" x="2.54" y="-22.86"/>
 <instance part="JP1" gate="G$1" x="-38.1" y="-27.94" rot="R180"/>
+<instance part="U$1" gate="G$1" x="93.98" y="20.32" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -12219,9 +12209,8 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 </segment>
 <segment>
 <pinref part="SUPPLY3" gate="G$1" pin="VCC"/>
-<wire x1="88.9" y1="15.24" x2="88.9" y2="17.78" width="0.1524" layer="91"/>
-<pinref part="X1" gate="-4" pin="S"/>
-<wire x1="88.9" y1="17.78" x2="91.44" y2="17.78" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="-5V"/>
+<wire x1="83.82" y1="27.94" x2="93.98" y2="27.94" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SUPPLY6" gate="G$1" pin="VCC"/>
@@ -12271,13 +12260,12 @@ http://www.fairchildsemi.com/ds/LM/LM7805.pdf</description>
 </segment>
 <segment>
 <pinref part="GND3" gate="1" pin="GND"/>
-<wire x1="81.28" y1="17.78" x2="81.28" y2="20.32" width="0.1524" layer="91"/>
-<pinref part="X1" gate="-3" pin="S"/>
-<wire x1="81.28" y1="20.32" x2="91.44" y2="20.32" width="0.1524" layer="91"/>
-<wire x1="81.28" y1="20.32" x2="81.28" y2="22.86" width="0.1524" layer="91"/>
-<junction x="81.28" y="20.32"/>
-<pinref part="X1" gate="-2" pin="S"/>
-<wire x1="81.28" y1="22.86" x2="91.44" y2="22.86" width="0.1524" layer="91"/>
+<wire x1="81.28" y1="17.78" x2="81.28" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="GND2"/>
+<wire x1="81.28" y1="22.86" x2="93.98" y2="22.86" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="GND1"/>
+<wire x1="93.98" y1="17.78" x2="81.28" y2="17.78" width="0.1524" layer="91"/>
+<junction x="81.28" y="17.78"/>
 </segment>
 <segment>
 <pinref part="GND4" gate="1" pin="GND"/>
