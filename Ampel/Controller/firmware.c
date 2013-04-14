@@ -2,12 +2,25 @@
  * BCD-Anzeige mit Schieberegister und PWM
  * Autor: Stefan Haun <tux@netz39.de>
  * 
- * Entwickelt für AT90S2343
+ * Entwickelt für ATTINY25
+ * 
+ * nutzt https://github.com/eriksl/usitwislave.git
  */
 
+
 #include <avr/io.h>
-#include <util/delay.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
+#include <util/twi.h>
+#include <stdint.h>
+
+#include "usitwislave.h"
+
+/* define CPU frequency in Mhz here if not defined in Makefile */
+#ifndef F_CPU
+#define F_CPU 4000000UL
+#endif
+
 
 inline void setPortB(char mask) {
   PORTB = PORTB | mask;
@@ -25,11 +38,11 @@ volatile char current_color;
 volatile char is_blink;
 
 inline void switch_color(char col) {
-   setPortB(0b11);
+   setPortB(0b11000);
    if (col == COLOR_RED) 
-     resetPortB(0b01);
+     resetPortB(0b01000);
    if (col == COLOR_GREEN) 
-     resetPortB(0b10);
+     resetPortB(0b10000);
 }
 
 inline void setColor(const char col, const char blink) {
@@ -39,27 +52,40 @@ inline void setColor(const char col, const char blink) {
 }
 
 
+static void twi_callback(uint8_t buffer_size,
+			volatile uint8_t input_buffer_length, volatile const uint8_t *input_buffer,
+                        volatile uint8_t *output_buffer_length, volatile uint8_t *output_buffer) {
+  if (input_buffer_length)
+    setColor(input_buffer[0], 0);
+  
+  *output_buffer_length=0;
+}
+
+static void twi_idle_callback(void) {
+  // void
+}
 
 void init(void) {
   /*
    * Pin-Config PortB:
-   *   PB0: LED Rot (Out Invers)
-   *   PB1: LED Grün (Out Invers)
-   *   PB2: Set 1 (In)
-   *   PB3: Set 2 (In)
-   *   PB4: Set 3 (In)
+   *   PB0: I2C SDA
+   *   PB1: N/A
+   *   PB2: I2C SDC
+   *   PB3: Rt (Out)
+   *   PB4: Gn (Out)
    */
-  DDRB  = 0b11100011;
+  DDRB  = 0b1111010;
   // PullUp für Eingänge
   /*
    * Aus bisher nicht geklärten Gründen ist der PullUp an PB4 nicht wirksam und
    * musste in der Schaltung ergänzt werden!
    */
-  PORTB = 0b11111111;
+  PORTB = 0b11111010;
    
    /*  disable interrupts  */
    cli();
-  
+   
+   
    /*  set clock   */
   CLKPR = (1 << CLKPCE);  /*  enable clock prescaler update       */
   CLKPR = 0;              /*  set clock to maximum                */
@@ -78,38 +104,20 @@ void init(void) {
   sei();  
   
   setColor(COLOR_NONE, 0);
+
+  usi_twi_slave(0x20, 0, &twi_callback, &twi_idle_callback);
+  
 }
 
 /*
  */
+
 
 int main(void)
 {
   // initialisieren
   init();
 
-  while(1) {
-   // Pin-Belegung Port B auslesen
-   char b = PINB;
-   // e Pins in Hex-Ziffer umwandelns
-   /*
-    * Bei günstigerer PIN-Belegung lässt sich das auch als
-    * int val = (b>>1)&0xF;
-    * darstellen!
-    */
-   char red = !bit_is_set(b, PB2);
-   char green = !bit_is_set(b, PB3);
-   char blink = !bit_is_set(b, PB4);
-   
-   if (red)
-     setColor(COLOR_RED, blink);
-   else if (green)
-     setColor(COLOR_GREEN, blink);
-   else
-     setColor(COLOR_NONE, blink);
-   
-  }
-        
   return 0;
 }
 
