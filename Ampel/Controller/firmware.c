@@ -1,12 +1,19 @@
 /*
- * BCD-Anzeige mit Schieberegister und PWM
+ * Ampel-Controller mit I²C-Anbindung
  * Autor: Stefan Haun <tux@netz39.de>
  * 
  * Entwickelt für ATTINY25
  * 
  * nutzt https://github.com/eriksl/usitwislave.git
+ * 
+ * DO NOT forget to set the fuses s.th. the controller uses the 8 MHz clock!
  */
 
+
+/* define CPU frequency in MHz here if not defined in Makefile */
+#ifndef F_CPU
+#define F_CPU 8000000UL
+#endif
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
@@ -15,11 +22,6 @@
 #include <stdint.h>
 
 #include "usitwislave.h"
-
-/* define CPU frequency in Mhz here if not defined in Makefile */
-#ifndef F_CPU
-#define F_CPU 4000000UL
-#endif
 
 
 inline void setPortB(char mask) {
@@ -53,10 +55,18 @@ inline void setColor(const char col, const char blink) {
 
 
 static void twi_callback(uint8_t buffer_size,
-			volatile uint8_t input_buffer_length, volatile const uint8_t *input_buffer,
-                        volatile uint8_t *output_buffer_length, volatile uint8_t *output_buffer) {
-  if (input_buffer_length)
-    setColor(input_buffer[0], 0);
+                         volatile uint8_t input_buffer_length, 
+                         volatile const uint8_t *input_buffer,
+                         volatile uint8_t *output_buffer_length, 
+                         volatile uint8_t *output_buffer) {
+  
+  if (input_buffer_length) {
+    const int cmd  = input_buffer[0] & 0xF0 >> 4;
+    const int data = input_buffer[0] & 0x0F;
+    
+    //TODO evaluate cmd
+    setColor(data&0x7, data&0x8);
+  }
   
   *output_buffer_length=0;
 }
@@ -76,11 +86,13 @@ void init(void) {
    */
   DDRB  = 0b1111010;
   // PullUp für Eingänge
-  /*
-   * Aus bisher nicht geklärten Gründen ist der PullUp an PB4 nicht wirksam und
-   * musste in der Schaltung ergänzt werden!
-   */
   PORTB = 0b11111010;
+
+  /*
+   * Set state: no color
+   */
+  setColor(COLOR_NONE, 0);
+
    
    /*  disable interrupts  */
    cli();
@@ -102,21 +114,15 @@ void init(void) {
     
   // Global Interrupts aktivieren
   sei();  
-  
-  setColor(COLOR_NONE, 0);
-
-  usi_twi_slave(0x20, 0, &twi_callback, &twi_idle_callback);
-  
 }
-
-/*
- */
-
 
 int main(void)
 {
   // initialisieren
   init();
+
+  // start TWI (I²C) slave mode
+  usi_twi_slave(0x20, 0, &twi_callback, &twi_idle_callback);
 
   return 0;
 }
@@ -128,6 +134,7 @@ volatile char red = 0;
 
 ISR (TIMER0_OVF_vect)
 {
+  // TODO be a bit more fancy at this point
   if (++tcount > TCOUNT_MAX) {
     tcount = 0;
     blink = !blink;
