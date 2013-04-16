@@ -54,6 +54,24 @@ inline void setColor(const char col, const char blink) {
 }
 
 
+/*
+ * I²C Datenformat:
+ * 
+ * CCCCDDDD
+ * 
+ * command (CCCC)
+ * 	GetLight 0x01   Aktuellen Datenwert ausgeben
+ *      SetLight 0x02   Neuen Datenwert setzen
+ * 
+ * data (DDDD)
+ * 	1 bit blink-Status
+ * 	3 bit Farbe:	0 keine
+ * 			1 rot
+ * 			2 grün
+ */
+#define CMD_GETLIGHT 0x01
+#define CMD_SETLIGHT 0x02
+
 static void twi_callback(uint8_t buffer_size,
                          volatile uint8_t input_buffer_length, 
                          volatile const uint8_t *input_buffer,
@@ -64,11 +82,21 @@ static void twi_callback(uint8_t buffer_size,
     const int cmd  = input_buffer[0] & 0xF0 >> 4;
     const int data = input_buffer[0] & 0x0F;
     
-    //TODO evaluate cmd
-    setColor(data&0x7, data&0x8);
+    switch (cmd) {
+      case CMD_GETLIGHT: {
+	uint8_t state = ((is_blink != 0) << 4) + current_color;
+	output_buffer[0] = state;
+	*output_buffer_length = 1;
+	break;
+      }
+      case CMD_SETLIGHT: {
+	setColor(data&0x7, data&0x8);
+	*output_buffer_length=0;
+	break;
+      }
+    }
   }
   
-  *output_buffer_length=0;
 }
 
 static void twi_idle_callback(void) {
