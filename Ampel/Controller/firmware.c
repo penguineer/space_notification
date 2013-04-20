@@ -79,7 +79,7 @@ static void twi_callback(uint8_t buffer_size,
                          volatile uint8_t *output_buffer) {
   
   if (input_buffer_length) {
-    const int cmd  = input_buffer[0] & 0xF0 >> 4;
+    const int cmd  = (input_buffer[0] & 0xF0) >> 4;
     const int data = input_buffer[0] & 0x0F;
     
     switch (cmd) {
@@ -95,6 +95,7 @@ static void twi_callback(uint8_t buffer_size,
 	break;
       }
     }
+    
   }
   
 }
@@ -155,7 +156,7 @@ int main(void)
   return 0;
 }
 
-const int TCOUNT_MAX = 24;
+const int TCOUNT_MAX = 2400;
 volatile int tcount = 0;
 volatile char blink = 0;
 volatile char red = 0;
