@@ -84,7 +84,7 @@ static void twi_callback(uint8_t buffer_size,
     
     switch (cmd) {
       case CMD_GETLIGHT: {
-	uint8_t state = ((is_blink != 0) << 4) + current_color;
+	const uint8_t state = ((is_blink == 0 ? 0 : 1) << 3) + current_color;
 	output_buffer[0] = state;
 	*output_buffer_length = 1;
 	break;
@@ -156,15 +156,15 @@ int main(void)
   return 0;
 }
 
-const int TCOUNT_MAX = 2400;
+const int TCOUNT_MAX = 20000;
 volatile int tcount = 0;
 volatile char blink = 0;
-volatile char red = 0;
 
 ISR (TIMER0_OVF_vect)
 {
   // TODO be a bit more fancy at this point
-  if (++tcount > TCOUNT_MAX) {
+  tcount++;
+  if (tcount > TCOUNT_MAX) {
     tcount = 0;
     blink = !blink;
     switch_color(is_blink && !blink ? COLOR_NONE : current_color);
