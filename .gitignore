@@ -1,2 +1,11 @@
+# compiled files
+*.pdf
+
+# EAGLE autosave files
 *.b#?
 *.s#?
+
+# gcode-files
+*.g
+*.gco
+*.gcode

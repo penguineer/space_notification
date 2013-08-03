@@ -22,6 +22,7 @@ clean:
 	rm *.o *.elf *.hex
 
 $(PROGRAM).hex: $(PROGRAM).c
-	avr-gcc $(CFLAGS) -c $(PROGRAM).c -o $(PROGRAM).o
-	avr-gcc $(CFLAGS) $(PROGRAM).o -o $(PROGRAM).elf
+	avr-gcc $(CFLAGS) -c usitwislave.c -o usitwislave.o
+	avr-gcc $(CFLAGS) -c $(PROGRAM).c  -o $(PROGRAM).o
+	avr-gcc $(CFLAGS) $(PROGRAM).o usitwislave.o -o $(PROGRAM).elf
 	avr-objcopy -R .eeprom -O ihex $(PROGRAM).elf $(PROGRAM).hex
