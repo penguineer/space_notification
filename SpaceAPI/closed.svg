@@ -16,8 +16,8 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="closed.svg"
    inkscape:export-filename="C:\Dokumente und Einstellungen\adahl\Eigene Dateien\GitHub\netz39-space_notification\SpaceAPI\closed.png"
-   inkscape:export-xdpi="90"
-   inkscape:export-ydpi="90">
+   inkscape:export-xdpi="56.25"
+   inkscape:export-ydpi="56.25">
   <defs
      id="defs3066" />
   <sodipodi:namedview
@@ -28,7 +28,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="94.95094"
+     inkscape:cx="-15.406203"
      inkscape:cy="82.783678"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -56,7 +56,7 @@
      id="layer1"
      transform="translate(0,-988.36218)">
     <rect
-       style="fill:#cc3314;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       style="fill:#a62911;fill-opacity:1;fill-rule:nonzero;stroke:none"
        id="rect3885"
        width="320"
        height="64"
