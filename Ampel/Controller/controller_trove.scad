@@ -37,7 +37,7 @@ module snapper(x,y, height, length, ang) {
 	translate([-length/2,0,0])
 		difference() {
 			cube(size=[length,2,1.5]);
-			translate([0,2,0])
+			% translate([0,2,0])
 			rotate([45,0,0])
 				cube(size=[length,4,4]);
 		}

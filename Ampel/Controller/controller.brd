@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.4">
+<eagle version="6.5.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -8,44 +8,44 @@
 </settings>
 <grid distance="1.27" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
-<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
-<layer number="30" name="bStop" color="7" fill="6" visible="yes" active="yes"/>
-<layer number="31" name="tCream" color="7" fill="4" visible="yes" active="yes"/>
-<layer number="32" name="bCream" color="7" fill="5" visible="yes" active="yes"/>
-<layer number="33" name="tFinish" color="6" fill="3" visible="yes" active="yes"/>
-<layer number="34" name="bFinish" color="6" fill="6" visible="yes" active="yes"/>
-<layer number="35" name="tGlue" color="7" fill="4" visible="yes" active="yes"/>
-<layer number="36" name="bGlue" color="7" fill="5" visible="yes" active="yes"/>
-<layer number="37" name="tTest" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="38" name="bTest" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
-<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
-<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
-<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
-<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
-<layer number="44" name="Drills" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
-<layer number="47" name="Measures" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="no" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="no" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="no" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="no" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="no" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="no" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="no" active="yes"/>
 <layer number="50" name="dxf" color="7" fill="1" visible="no" active="no"/>
-<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="no" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="no" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="no" active="no"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="no" active="no"/>
 <layer number="93" name="Pins" color="2" fill="1" visible="no" active="no"/>
@@ -1672,107 +1672,6 @@ design rules under a new name.</description>
 <via x="7.62" y="16.51" extent="1-16" drill="0.6" shape="square"/>
 </signal>
 </signals>
-<errors>
-<approved hash="3,16,30446e5ed0ee8ef4"/>
-<approved hash="3,16,e4e716ea01fff3f2"/>
-<approved hash="1,20,5ea3954394255fc5"/>
-<approved hash="1,20,52a79347922153c1"/>
-<approved hash="18,29,46d5e00a34ea660a"/>
-<approved hash="18,29,e7391650ba341c94"/>
-<approved hash="18,29,a6c7f9f423198815"/>
-<approved hash="18,29,19c434c70c1e2113"/>
-<approved hash="18,29,fb27b11a1e3bae23"/>
-<approved hash="18,29,a3d1e83c3bf2be5a"/>
-<approved hash="18,29,26979d679da82658"/>
-<approved hash="18,29,26899d799d2a26da"/>
-<approved hash="18,29,f18f70e0704248fe"/>
-<approved hash="18,29,5e97ee48d5f3e89f"/>
-<approved hash="18,29,67d6380eb0c05d5d"/>
-<approved hash="18,29,2b207528fd092524"/>
-<approved hash="18,29,1e85ef75ef1a1eea"/>
-<approved hash="18,29,1e9bef6bef981e68"/>
-<approved hash="18,29,278c4edd397ff7fd"/>
-<approved hash="18,29,609438756acea19c"/>
-<approved hash="18,29,27d070034dcd945b"/>
-<approved hash="18,29,632635253404d822"/>
-<approved hash="18,29,ca9d3d6d3d3ccacc"/>
-<approved hash="18,29,ca833d733dbeca4e"/>
-<approved hash="18,29,a290ea623bd90298"/>
-<approved hash="18,29,f5888cca9a68a6f9"/>
-<approved hash="18,29,f03b1e2d389f2fbf"/>
-<approved hash="18,29,addf8819d54639d6"/>
-<approved hash="18,29,a96d376c122d8cbe"/>
-<approved hash="18,29,38869a769a2b38db"/>
-<approved hash="18,29,388e9a7e9a8b387b"/>
-<approved hash="18,29,38868776044f581f"/>
-<approved hash="18,29,f38fb7cf65edf26d"/>
-<approved hash="18,29,089a338ac77bbe90"/>
-<approved hash="18,29,8e6b3049d07af648"/>
-<approved hash="18,29,f063f2465675a447"/>
-<approved hash="18,29,2665d0477074f646"/>
-<approved hash="18,29,f455567632440076"/>
-<approved hash="18,29,f4f7d2c531ec8fce"/>
-<approved hash="18,29,a6f854cdf3e3f1c1"/>
-<approved hash="18,29,f4f972cbd1e227c0"/>
-<approved hash="18,29,02c830fb57d2f5f0"/>
-<approved hash="18,29,9f3ffe43147c7500"/>
-<approved hash="18,29,2e3ad223d191a6be"/>
-<approved hash="18,29,61de56175c48d0d7"/>
-<approved hash="18,29,687eea8eea7b688b"/>
-<approved hash="18,29,6876ea86eadb682b"/>
-<approved hash="18,29,218ee9301c12756c"/>
-<approved hash="18,29,6687558983b0211e"/>
-<approved hash="18,29,fa1f1d2bbfc514c8"/>
-<approved hash="18,29,ad01c83e28d78dd7"/>
-<approved hash="18,29,da0a7cd2d0373ad6"/>
-<approved hash="18,29,431febcc05286dc4"/>
-<approved hash="18,29,cb6c2e853a69c043"/>
-<approved hash="18,29,a3d628edaf237a5d"/>
-<approved hash="18,29,3b20b1cbdaea3a24"/>
-<approved hash="18,29,be8ca57ca52cbedc"/>
-<approved hash="18,29,be92a562a5aebe5e"/>
-<approved hash="18,29,4e91a69ba9200c99"/>
-<approved hash="18,29,b9896033949134f8"/>
-<approved hash="18,29,21dc64e0a7bf17d5"/>
-<approved hash="18,29,1c3892d416665dbc"/>
-<approved hash="18,29,c89e3e6e3e99c869"/>
-<approved hash="18,29,c8963e663e39c8c9"/>
-<approved hash="18,29,a087879ceea5ba1e"/>
-<approved hash="18,29,f38e2f258707186c"/>
-<approved hash="18,29,eb23bdd819f99127"/>
-<approved hash="18,29,afd5f8fe0430b95e"/>
-<approved hash="18,29,3685a775a72a36da"/>
-<approved hash="18,29,369ba76ba7a83658"/>
-<approved hash="18,29,f78f162e5d8c53fe"/>
-<approved hash="18,29,3897e886ce3dc59f"/>
-<approved hash="18,29,6e3896c8cf7a94bc"/>
-<approved hash="18,29,25dc16fc6ea3ced5"/>
-<approved hash="18,29,98856e756e2998d9"/>
-<approved hash="18,29,988d6e7d6e899879"/>
-<approved hash="18,29,a1b0d7168c97db58"/>
-<approved hash="18,29,c58dcd2a0e08836f"/>
-<approved hash="18,29,4284b19375aa331d"/>
-<approved hash="18,29,d3208dd6f0f72424"/>
-<approved hash="18,29,9fd6c0f0b13e505d"/>
-<approved hash="18,29,35b092f23f17e86a"/>
-<approved hash="18,29,6ab9e549e51a6aea"/>
-<approved hash="18,29,6aa7e557e5986a68"/>
-<approved hash="18,29,6a903ab36f089698"/>
-<approved hash="18,29,2588441b0eb9f2f9"/>
-<approved hash="18,29,b1acd61e18a8f47b"/>
-<approved hash="18,29,383e16fb04488bba"/>
-<approved hash="18,29,a5da40ce719005d3"/>
-<approved hash="18,29,e4ec08ed6b82371b"/>
-<approved hash="18,29,b88d9a7d9a89b879"/>
-<approved hash="18,29,b8859a759a29b8d9"/>
-<approved hash="18,29,b38dcf1eb13cb66f"/>
-<approved hash="18,29,4084c7a7409e8c1d"/>
-<approved hash="18,29,6af9d16731238abd"/>
-<approved hash="19,1,4e58e7f2a935fd72"/>
-<approved hash="19,1,b862efc287872dca"/>
-<approved hash="19,16,d2a16093991804df"/>
-<approved hash="19,16,cd675f9785247225"/>
-</errors>
 </board>
 </drawing>
 </eagle>
