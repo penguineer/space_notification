@@ -53,6 +53,25 @@ inline void setColor(const char col, const char blink) {
   //switch_color(col);
 }
 
+//flag state change
+inline void i3c_stateChange() {
+  // port B1 as output
+  DDRB |= (1 << PB1);
+  // set to low
+  PORTB &= ~(1 << PB1);
+}
+
+// put to listening mode
+inline void i3c_tristate() {
+  // port B1 as input
+  DDRB &= ~(1 << PB1);
+  // no pull-up
+  PORTB &= ~(1 << PB1);
+}
+
+inline uint8_t i3c_state() {
+  return (PINB & (1 << PB1)) >> PB1;
+}
 
 /*
  * I²C Datenformat:
@@ -108,7 +127,7 @@ void init(void) {
   /*
    * Pin-Config PortB:
    *   PB0: I2C SDA
-   *   PB1: N/A
+   *   PB1: I3C INT
    *   PB2: I2C SDC
    *   PB3: Rt (Out)
    *   PB4: Gn (Out)
@@ -143,6 +162,8 @@ void init(void) {
     
   // Global Interrupts aktivieren
   sei();  
+  
+  i3c_tristate();
 }
 
 int main(void)
