@@ -11,6 +11,9 @@ echo "Content-Type: text/plain"
 echo "Access-Control-Allow-Origin: *"
 echo
 
+# Check former space status
+isopen=$(space_is_open)
+
 
 ./color.sh greenblink
 ./spaceapi.sh true
@@ -19,7 +22,6 @@ ln -fs open.png ../state.png
 touch ../open.png
 
 # only if not already open
-isopen=$(space_is_open)
 if [ "$isopen" != "true" ]; then
 
   ./tweet.sh "#Spacetime im @netz39! ($(date "+%Y-%m-%d %H:%M"))"
