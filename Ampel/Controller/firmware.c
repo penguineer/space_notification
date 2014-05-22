@@ -32,9 +32,9 @@ inline void resetPortB(char mask) {
   PORTB = PORTB & ~mask; 
 }
 
-const int COLOR_NONE  = 0;
-const int COLOR_RED   = 1;
-const int COLOR_GREEN = 2;
+const uint8_t COLOR_NONE  = 0;
+const uint8_t COLOR_RED   = 1;
+const uint8_t COLOR_GREEN = 2;
 
 volatile char current_color;
 volatile char is_blink;
@@ -76,9 +76,10 @@ inline uint8_t i3c_state() {
 /*
  * I²C Datenformat:
  * 
- * CCCCDDDD
+ * PCCCDDDD
  * 
- * command (CCCC)
+ * parity (P)
+ * command (CCC)
  * 	GetLight 0x01   Aktuellen Datenwert ausgeben
  *      SetLight 0x02   Neuen Datenwert setzen
  * 
@@ -88,8 +89,9 @@ inline uint8_t i3c_state() {
  * 			1 rot
  * 			2 grün
  */
-#define CMD_GETLIGHT 0x01
-#define CMD_SETLIGHT 0x02
+#define CMD_I3C_RESET 0x00
+#define CMD_GETLIGHT  0x01
+#define CMD_SETLIGHT  0x02
 
 static void twi_callback(uint8_t buffer_size,
                          volatile uint8_t input_buffer_length, 
@@ -98,25 +100,47 @@ static void twi_callback(uint8_t buffer_size,
                          volatile uint8_t *output_buffer) {
   
   if (input_buffer_length) {
-    const int cmd  = (input_buffer[0] & 0xF0) >> 4;
-    const int data = input_buffer[0] & 0x0F;
+    const char parity = (input_buffer[0] & 0x80) >> 7;
+    const char cmd  = (input_buffer[0] & 0x70) >> 4;
+    const char data = input_buffer[0] & 0x0F;
     
+    // check parity
+    char v = input_buffer[0] & 0x7F;
+    char c;
+    for (c = 0; v; c++)
+      v &= v-1;
+    c &= 1;
+    
+    // some dummy output value, as 0 states an error
+    uint8_t output=0;
+    
+    // only check if parity matches
+    if (parity == c)
     switch (cmd) {
+      case CMD_I3C_RESET: {
+	i3c_tristate();
+	break;
+      }
       case CMD_GETLIGHT: {
-	const uint8_t state = ((is_blink == 0 ? 0 : 1) << 3) + current_color;
-	output_buffer[0] = state;
-	*output_buffer_length = 1;
+	const uint8_t state = ((is_blink == 0 ? 0 : 1) << 4) + current_color;
+	output = state;
+
+	// set msb to avoid error state
+	output += 0x80;
+	
 	break;
       }
       case CMD_SETLIGHT: {
 	setColor(data&0x7, data&0x8);
-	*output_buffer_length=0;
+	output = 1;
 	break;
       }
     }
-    
-  }
-  
+
+    *output_buffer_length = 2;
+    output_buffer[0] = output;
+    output_buffer[1] = ~(output);    
+  }  
 }
 
 static void twi_idle_callback(void) {
