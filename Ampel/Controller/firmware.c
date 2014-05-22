@@ -36,10 +36,10 @@ const uint8_t COLOR_NONE  = 0;
 const uint8_t COLOR_RED   = 1;
 const uint8_t COLOR_GREEN = 2;
 
-volatile char current_color;
-volatile char is_blink;
+volatile uint8_t current_color;
+volatile uint8_t is_blink;
 
-inline void switch_color(char col) {
+inline void switch_color(uint8_t col) {
    setPortB(0b11000);
    if (col == COLOR_RED) 
      resetPortB(0b01000);
@@ -47,7 +47,7 @@ inline void switch_color(char col) {
      resetPortB(0b10000);
 }
 
-inline void setColor(const char col, const char blink) {
+inline void setColor(const uint8_t col, const uint8_t blink) {
   current_color = col;
   is_blink = blink;
   //switch_color(col);
@@ -100,13 +100,13 @@ static void twi_callback(uint8_t buffer_size,
                          volatile uint8_t *output_buffer) {
   
   if (input_buffer_length) {
-    const char parity = (input_buffer[0] & 0x80) >> 7;
-    const char cmd  = (input_buffer[0] & 0x70) >> 4;
-    const char data = input_buffer[0] & 0x0F;
+    const uint8_t parity = (input_buffer[0] & 0x80) >> 7;
+    const uint8_t cmd  = (input_buffer[0] & 0x70) >> 4;
+    const uint8_t data = input_buffer[0] & 0x0F;
     
     // check parity
-    char v = input_buffer[0] & 0x7F;
-    char c;
+    uint8_t v = input_buffer[0] & 0x7F;
+    uint8_t c;
     for (c = 0; v; c++)
       v &= v-1;
     c &= 1;
@@ -202,8 +202,8 @@ int main(void)
 }
 
 const int TCOUNT_MAX = 20000;
-volatile int tcount = 0;
-volatile char blink = 0;
+volatile uint16_t tcount = 0;
+volatile uint8_t blink = 0;
 
 ISR (TIMER0_OVF_vect)
 {
