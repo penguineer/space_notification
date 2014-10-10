@@ -1,7 +1,7 @@
 #PROGRAMMER = avrisp2
 PROGRAMMER = usbtiny
-CPU_GCC = attiny25
-CPU_DUDE = t25
+CPU_GCC = attiny85
+CPU_DUDE = t85
 
 F_CPU = 8000000
 
