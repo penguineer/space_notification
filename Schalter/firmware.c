@@ -2,7 +2,7 @@
  * Spacetime-Schalter-Controller mit I³C-Anbindung
  * Autor: Stefan Haun <tux@netz39.de>
  * 
- * Entwickelt für ATTINY25
+ * Entwickelt für ATTINY85
  * 
  * nutzt https://github.com/eriksl/usitwislave.git
  * 
@@ -33,22 +33,22 @@ inline void resetPortB(char mask) {
 }
 
 // internal space state
-#define STATE_UNKNOWN 0
 #define STATE_CLOSED  1
 #define STATE_OPEN    2
-static uint8_t state=STATE_UNKNOWN;
+#define STATE_UNKNOWN 3
+volatile uint8_t switch_state=STATE_UNKNOWN;
 
 inline uint8_t getState() {
-  return state;
+  return switch_state;
 }
 
 inline void setState(uint8_t _state) {
-  state = _state;
+  switch_state = _state;
 }
 
 // switch readout
 uint8_t getSwitch(uint8_t state) {
-  switch (state) {
+  switch (switch_state) {
     case STATE_CLOSED:
       return (PINB & (1<<PB4)) ? 0 : 1;
       break;
@@ -90,6 +90,7 @@ inline uint8_t i3c_state() {
  * command (CCC)
  *      Reset	 0x0	Reset I³C state
  * 	GetState 0x01   Aktuelle Schalterstellung ausgeben
+ * 	SetState 0x02   Status Schalterstellung setzen
  * 
  * data (DDDD)
  * 	nicht verwendet
@@ -124,6 +125,7 @@ static void twi_callback(uint8_t buffer_size,
     switch (cmd) {
       case CMD_I3C_RESET: {
 	i3c_tristate();
+	output = 1;
 	break;
       }
       case CMD_GETSTATE: {
@@ -131,11 +133,10 @@ static void twi_callback(uint8_t buffer_size,
 	break;
       }
       case CMD_SETSTATE: {
-	if (data >= 0 && data <= 2) { 
+	if (data >= 1 && data <= 3) { 
 	  setState(data);
 	  output = 1;
 	}
-
 	break;
       }
     }
@@ -161,7 +162,7 @@ void init(void) {
    */
   DDRB  = 0b11100111;
   // PullUp für Eingänge
-  PORTB = 0b11100111;
+  PORTB = 0b11111111;
 
   // activate the timer
   cli();
@@ -192,7 +193,7 @@ int main(void)
 
 
 void switchState(uint8_t _state) {
-  if (_state != state)
+  if (_state != getState())
     i3c_stateChange();
   setState(_state);
 }
