@@ -48,12 +48,12 @@ inline void setState(uint8_t _state) {
 
 // switch readout
 uint8_t getSwitch(uint8_t state) {
-  switch (switch_state) {
+  switch (state) {
     case STATE_CLOSED:
-      return (PINB & (1<<PB4)) ? 0 : 1;
+      return (PINB & (1<<PB3)) ? 0 : 1;
       break;
     case STATE_OPEN: 
-      return (PINB & (1<<PB3)) ? 0 : 1;
+      return (PINB & (1<<PB4)) ? 0 : 1;
       break;
   }
   
@@ -157,8 +157,8 @@ void init(void) {
    *   PB0: I2C SDA
    *   PB1: I3C INT
    *   PB2: I2C SDC
-   *   PB3: On  (In)
-   *   PB4: Off (In)
+   *   PB3: Off (In)
+   *   PB4: On  (In)
    */
   DDRB  = 0b11100111;
   // PullUp für Eingänge
