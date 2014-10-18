@@ -209,13 +209,13 @@ void dechatterKey() {
   // adjust manual key chatter
   uint8_t input = (getSwitch(STATE_CLOSED) << 1) +
                   (getSwitch(STATE_OPEN));
- 
+		  
   if( input != key_state ) {
     key_counter--;
     if( key_counter == 0 ) {
       key_counter = DECHATTER_COUNTER;
       key_state = input;
-      if( !input ) {
+      if( input ) {
         // set the new state
         if (input & 0x02)
 	  switchState(STATE_CLOSED);
@@ -235,7 +235,7 @@ ISR (TIM0_OVF_vect)
   cli();
   
   dechatterKey();
-  
+
   // restore state
   SREG = _sreg;
 }
