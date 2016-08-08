@@ -13,7 +13,7 @@ function jsonval {
 }
 
 function space_is_open {
-	json=$(curl -s -4 http://spaceapi.n39.eu/json)
+	json=$(curl -s http://spaceapi.n39.eu/json)
 	prop='open'
 	
 	st=$(jsonval)
@@ -23,13 +23,13 @@ function space_is_open {
 }
 
 function space_open {
-  ret=$(curl -s -4 http://wittgenstein/open)
+  ret=$(curl -s http://wittgenstein/open)
   
   echo "$ret"
 }
 
 function space_close {
-  ret=$(curl -s -4 http://wittgenstein/close)
+  ret=$(curl -s http://wittgenstein/close)
   
   echo "$ret"
 }
@@ -55,14 +55,16 @@ known_sw=""
 
 while [[ true ]]; do
   #reset an I3C state
-  if [[ "$(reset_i3c)" -ne "0x01" ]]; then
-    echo "Could not reset the I3C INT!"
-  fi
+#  if [[ "$(reset_i3c)" -ne "0x01" ]]; then
+#    echo "Could not reset the I3C INT!"
+#  fi
   
   # get current switch state
   sw=$(get_switches)
+  echo "$(date "+%Y-%m-%d %H:%M:%S") Switch Status is $sw"
+
   if [[ "$known_sw" -ne "$sw" ]]; then
-    echo "New State: $sw"
+    echo "New State!"
     known_sw=$sw
     
     # Get the space status
@@ -89,5 +91,5 @@ while [[ true ]]; do
     
   fi # new state
 
-  #sleep 2
+  sleep 2
 done
