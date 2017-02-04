@@ -308,7 +308,7 @@ int main(int argc, char *argv[]) {
     bool is_open = get_space_status(SPACEAPI_PATH);
     
     // manage the countdown
-    if (door_is_locked) {
+    if (!is_open && door_is_locked) {
       if (countdown) --countdown;
     } else {
       countdown = 30;
