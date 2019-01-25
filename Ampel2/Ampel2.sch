@@ -324,17 +324,6 @@ Text GLabel 10200 3750 2    50   Output ~ 0
 ISP_RST
 Wire Wire Line
 	10200 3750 10100 3750
-$Comp
-L MCU_Microchip_ATtiny:ATtiny85-20PU U1
-U 1 1 5C2BE787
-P 2600 2450
-F 0 "U1" H 2070 2496 50  0000 R CNN
-F 1 "ATtiny85-20PU" H 2070 2405 50  0000 R CNN
-F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 2600 2450 50  0001 C CIN
-F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf" H 2600 2450 50  0001 C CNN
-	1    2600 2450
-	1    0    0    -1  
-$EndComp
 Text GLabel 3550 2650 2    50   Input ~ 0
 ISP_RST
 Wire Wire Line
@@ -708,6 +697,17 @@ F 1 "2.0" H 6500 7155 50  0000 L CNN
 F 2 "MountingHole:MountingHole_2.2mm_M2_DIN965" H 6400 7200 50  0001 C CNN
 F 3 "~" H 6400 7200 50  0001 C CNN
 	1    6400 7200
+	1    0    0    -1  
+$EndComp
+$Comp
+L MCU_Microchip_ATtiny:ATtiny85V-10SU U1
+U 1 1 5C4C79A1
+P 2600 2450
+F 0 "U1" H 2070 2496 50  0000 R CNN
+F 1 "ATtiny85V-10SU" H 2070 2405 50  0000 R CNN
+F 2 "Package_SO:SOIJ-8_5.3x5.3mm_P1.27mm" H 2600 2450 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf" H 2600 2450 50  0001 C CNN
+	1    2600 2450
 	1    0    0    -1  
 $EndComp
 $EndSCHEMATC
