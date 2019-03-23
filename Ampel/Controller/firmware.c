@@ -23,6 +23,9 @@
 
 #include "usitwislave.h"
 
+#define LED_INTERNAL
+//#define LED_EXTERNAL
+
 
 inline void setPortB(char mask) {
   PORTB = PORTB | mask;
@@ -40,11 +43,20 @@ volatile uint8_t current_color;
 volatile uint8_t is_blink;
 
 inline void switch_color(uint8_t col) {
-   setPortB(0b11000);
+#ifdef LED_INTERNAL
+   resetPortB(0b11000);
    if (col == COLOR_RED) 
-     resetPortB(0b01000);
+     setPortB(0b10000);
    if (col == COLOR_GREEN) 
-     resetPortB(0b10000);
+     setPortB(0b01000);
+#endif
+#ifdef LED_EXTERNAL
+   setPortB(0b11000);
+   if (col == COLOR_RED)
+       resetPortB(0b10000);
+   if (col == COLOR_GREEN)
+       resetPortB(0b01000);
+   #endif
 }
 
 inline void setColor(const uint8_t col, const uint8_t blink) {
