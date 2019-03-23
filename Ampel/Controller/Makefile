@@ -1,7 +1,7 @@
 #PROGRAMMER = avrisp2
 PROGRAMMER = usbtiny
-CPU_GCC = attiny25
-CPU_DUDE = t25
+CPU_GCC = attiny85
+CPU_DUDE = t85
 
 F_CPU = 8000000
 
@@ -17,6 +17,9 @@ all: $(PROGRAM).hex
 
 program: $(PROGRAM).hex
 	avrdude -c $(PROGRAMMER) -P usb -p $(CPU_DUDE) -U flash:w:$(PROGRAM).hex
+
+fuse:
+	avrdude -c $(PROGRAMMER) -P usb -p $(CPU_DUDE) -U lfuse:w:0xe2:m -U hfuse:w:0xdf:m -U efuse:w:0xff:m
 
 clean:
 	rm *.o *.elf *.hex
