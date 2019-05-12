@@ -1,0 +1,37 @@
+{
+  "api": "0.13",
+  "space": "Netz39",
+  "logo": "http://www.netz39.de/wiki/_media/resources:public_relations:logo:netz39_logo_2013-07-11.png",
+  "url": "http://www.netz39.de",
+  "location": {
+    "address": "Leibnizstr. 32, 39104 Magdeburg, Germany",
+    "lat": 52.119561,
+    "lon": 11.629398
+  },
+  "state": {
+    "open": true,
+    "lastchange": 0,
+    "trigger_person": "",
+    "message": "",
+    "icon": {
+      "open": "http://www.netz39.de/open.png",
+      "closed": "http://www.netz39.de/closed.png"
+    }
+  },
+  "contact": {
+    "email": "kontakt@netz39.de",
+    "twitter": "@Netz39",
+    "ml": "list@netz39.de",
+    "irc": "irc://freenode/#netz39"
+  },
+  "issue_report_channels": [
+    "email",
+    "twitter",
+    "ml"
+  ],
+  "ext_door": {
+    "locked": true,
+    "open": true,
+    "lastchange": 0
+  }
+}

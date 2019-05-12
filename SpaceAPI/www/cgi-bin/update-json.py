@@ -2,36 +2,17 @@
 import json
 import time
 import paho.mqtt.client as mqtt
+import argparse
 
-spaceapi_dict = {
-    'api': '0.13',
-    'space': 'Netz39',
-    'logo': 'http://www.netz39.de/wiki/_media/resources:public_relations:logo:netz39_logo_2013-07-11.png',
-    'url': 'http://www.netz39.de',
-    'location': {
-        'address': 'Leibnizstr. 32, 39104 Magdeburg, Germany',
-        'lat': 52.119561,
-        'lon': 11.629398,
-    },
-    'state': {
-        'open': True,
-        'lastchange': int(time.time()),
-        'trigger_person': '',
-        'message': '',
-        'icon': {
-            'open': 'http://www.netz39.de/open.png',
-            'closed': 'http://www.netz39.de/closed.png',
-        },
-    },
-    'contact': {
-        'email': 'kontakt@netz39.de',
-        'twitter': '@Netz39',
-        'ml': 'list@netz39.de',
-        'irc': 'irc://freenode/#netz39',
-    },
-    'issue_report_channels': ['email', 'twitter', 'ml'],
-    'ext_door': {'locked': True, 'open': True, 'lastchange': int(time.time())},
-}
+parser = argparse.ArgumentParser(description='create SpaceAPI JSON based on MQTT data')
+parser.add_argument('--server', type=str, default='helium', help='address of the MQTT server')
+parser.add_argument('--template', type=argparse.FileType('r'), default='template.json', help='template of the JSON')
+parser.add_argument('--out', type=argparse.FileType('w'), default='spaceapi.json', help='output file location')
+
+
+args = parser.parse_args()
+spaceapi_dict = json.loads(args.template.read())
+args.out.write(json.dumps(spaceapi_dict, indent=2))
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -85,9 +66,7 @@ def on_message(client, userdata, msg):
     isOpen_str = 'true' if spaceapi_dict['state']['open'] else 'false'
     timestamp_str = str(current_time)
 
-    # write json file
-    with open('../spaceapi.json', 'w') as file:
-        file.write(json_str)
+    args.out.write(json_str)
 
     # publish to SpaceAPI topics
     client.publish(topic='/Netz39/SpaceAPI/json',payload=json_str, qos=2, retain=True)
@@ -99,7 +78,7 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect('helium', 1883, 60)
+client.connect(args.server, 1883, 60)
 
 # Blocking call that processes network traffic, dispatches callbacks and
 # handles reconnecting.
