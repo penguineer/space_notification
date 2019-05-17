@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 import argparse
 
 parser = argparse.ArgumentParser(description='create SpaceAPI JSON based on MQTT data')
-parser.add_argument('--server', type=str, default='helium', help='address of the MQTT server')
+parser.add_argument('--server', type=str, default='mqtt.n39.eu', help='address of the MQTT server')
 parser.add_argument('--template', type=argparse.FileType('r'), default='template.json', help='template of the JSON')
 parser.add_argument('--out', type=argparse.FileType('w'), default='spaceapi.json', help='output file location')
 
