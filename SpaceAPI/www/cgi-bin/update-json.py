@@ -3,16 +3,18 @@ import json
 import time
 import paho.mqtt.client as mqtt
 import argparse
+import os
 
 parser = argparse.ArgumentParser(description='create SpaceAPI JSON based on MQTT data')
 parser.add_argument('--server', type=str, default='mqtt.n39.eu', help='address of the MQTT server')
 parser.add_argument('--template', type=argparse.FileType('r'), default='template.json', help='template of the JSON')
-parser.add_argument('--out', type=argparse.FileType('w'), default='spaceapi.json', help='output file location')
-
+parser.add_argument('--out', type=argparse.FileType('w'), default='../spaceapi.json', help='output file location')
+parser.add_argument('--pic-path', type=str, default='../', help='path where open.png and close.png are located')
+parser.add_argument('--symlink-location', type=str, default='../state.png',
+                    help='where the symlink to the state image should be created')
 
 args = parser.parse_args()
 spaceapi_dict = json.loads(args.template.read())
-args.out.write(json.dumps(spaceapi_dict, indent=2))
 
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -66,10 +68,19 @@ def on_message(client, userdata, msg):
     isOpen_str = 'true' if spaceapi_dict['state']['open'] else 'false'
     timestamp_str = str(current_time)
 
+    args.out.seek(0)
+    args.out.truncate(0)
     args.out.write(json_str)
+    args.out.flush()
+
+    # update symlink
+    pic_name = 'open.png' if spaceapi_dict['state']['open'] else 'closed.png'
+    print("ln -s %s %s" % (os.path.abspath(args.pic_path + pic_name), os.path.abspath(args.symlink_location)))
+    os.remove(args.symlink_location)
+    os.symlink(os.path.abspath(args.pic_path + pic_name), os.path.abspath(args.symlink_location))
 
     # publish to SpaceAPI topics
-    client.publish(topic='/Netz39/SpaceAPI/json',payload=json_str, qos=2, retain=True)
+    client.publish(topic='/Netz39/SpaceAPI/json', payload=json_str, qos=2, retain=True)
     client.publish(topic='/Netz39/SpaceAPI/isOpen', payload=isOpen_str, qos=2, retain=True)
     client.publish(topic='/Netz39/SpaceAPI/lastchange', payload=timestamp_str, qos=2, retain=True)
 
@@ -85,3 +96,4 @@ client.connect(args.server, 1883, 60)
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
 client.loop_forever()
+
