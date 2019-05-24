@@ -9,7 +9,8 @@ parser = argparse.ArgumentParser(description='create SpaceAPI JSON based on MQTT
 parser.add_argument('--server', type=str, default='mqtt.n39.eu', help='address of the MQTT server')
 parser.add_argument('--template', type=argparse.FileType('r'), default='template.json', help='template of the JSON')
 parser.add_argument('--out', type=argparse.FileType('w'), default='../spaceapi.json', help='output file location')
-parser.add_argument('--pic-path', type=str, default='../', help='path where open.png and close.png are located')
+parser.add_argument('--open-image', type=str, default='../open.png', help='image for open state')
+parser.add_argument('--closed-image', type=str, default='../closed.png', help='image for closed state')
 parser.add_argument('--symlink-location', type=str, default='../state.png',
                     help='where the symlink to the state image should be created')
 
@@ -74,10 +75,10 @@ def on_message(client, userdata, msg):
     args.out.flush()
 
     # update symlink
-    pic_name = 'open.png' if spaceapi_dict['state']['open'] else 'closed.png'
+    pic = args.open_image if spaceapi_dict['state']['open'] else args.closed_image
     print("ln -s %s %s" % (os.path.abspath(args.pic_path + pic_name), os.path.abspath(args.symlink_location)))
     os.remove(args.symlink_location)
-    os.symlink(os.path.abspath(args.pic_path + pic_name), os.path.abspath(args.symlink_location))
+    os.symlink(os.path.abspath(pic), os.path.abspath(args.symlink_location))
 
     # publish to SpaceAPI topics
     client.publish(topic='/Netz39/SpaceAPI/json', payload=json_str, qos=2, retain=True)
