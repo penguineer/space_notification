@@ -76,7 +76,6 @@ def on_message(client, userdata, msg):
 
     # update symlink
     pic = args.open_image if spaceapi_dict['state']['open'] else args.closed_image
-    print("ln -s %s %s" % (os.path.abspath(args.pic_path + pic_name), os.path.abspath(args.symlink_location)))
     os.remove(args.symlink_location)
     os.symlink(os.path.abspath(pic), os.path.abspath(args.symlink_location))
 
