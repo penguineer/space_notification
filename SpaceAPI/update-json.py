@@ -8,10 +8,10 @@ import os
 parser = argparse.ArgumentParser(description='create SpaceAPI JSON based on MQTT data')
 parser.add_argument('--server', type=str, default='mqtt.n39.eu', help='address of the MQTT server')
 parser.add_argument('--template', type=argparse.FileType('r'), default='template.json', help='template of the JSON')
-parser.add_argument('--out', type=argparse.FileType('w'), default='../spaceapi.json', help='output file location')
-parser.add_argument('--open-image', type=str, default='../open.png', help='image for open state')
-parser.add_argument('--closed-image', type=str, default='../closed.png', help='image for closed state')
-parser.add_argument('--symlink-location', type=str, default='../state.png',
+parser.add_argument('--out', type=argparse.FileType('w'), default='www/spaceapi.json', help='output file location')
+parser.add_argument('--open-image', type=str, default='www/open.png', help='image for open state')
+parser.add_argument('--closed-image', type=str, default='www/closed.png', help='image for closed state')
+parser.add_argument('--symlink-location', type=str, default='www/state.png',
                     help='where the symlink to the state image should be created')
 
 args = parser.parse_args()
