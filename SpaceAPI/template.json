@@ -29,6 +29,16 @@
     "twitter",
     "ml"
   ],
+  "feeds": {
+    "blog": {
+      "type": "rss",
+      "url": "http://www.netz39.de/feed/"
+    },
+    "calendar": {
+      "type": "ical",
+      "url": "http://www.netz39.de/feed/eo-events/"
+    }
+  },
   "ext_door": {
     "locked": true,
     "open": true,
