@@ -2,7 +2,7 @@
   "api": "0.13",
   "space": "Netz39",
   "logo": "http://www.netz39.de/wiki/_media/resources:public_relations:logo:netz39_logo_2013-07-11.png",
-  "url": "http://www.netz39.de",
+  "url": "http://www.netz39.de/",
   "location": {
     "address": "Leibnizstr. 32, 39104 Magdeburg, Germany",
     "lat": 52.119561,
@@ -20,7 +20,7 @@
   },
   "contact": {
     "email": "kontakt@netz39.de",
-    "twitter": "@Netz39",
+    "twitter": "@netz39",
     "ml": "list@netz39.de",
     "irc": "irc://freenode/#netz39"
   },
