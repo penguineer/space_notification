@@ -14,7 +14,7 @@
     "trigger_person": "",
     "message": "",
     "icon": {
-      "open": "http://www.netz39.de/open.png",
+      "open": "http://www.netz39.de/occupied.png",
       "closed": "http://www.netz39.de/closed.png"
     }
   },
