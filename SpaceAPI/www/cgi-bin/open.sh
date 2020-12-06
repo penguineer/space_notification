@@ -18,8 +18,8 @@ isopen=$(space_is_open)
 ./color.sh greenblink
 ./spaceapi.sh true
 
-ln -fs open.png ../state.png
-touch ../open.png
+ln -fs occupied.png ../state.png
+touch ../occupied.png
 
 # only if not already open
 if [ "$isopen" != "true" ]; then
