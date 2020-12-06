@@ -21,16 +21,14 @@ isopen=$(space_is_open)
 ln -fs occupied.png ../state.png
 touch ../occupied.png
 
-# only if not already open
-if [ "$isopen" != "true" ]; then
+## only if not already open
+#if [ "$isopen" != "true" ]; then
+#
+#  ./tweet.sh "#Spacetime im @netz39! ($(date "+%Y-%m-%d %H:%M"))"
+#
+#else
+#  echo "Already open!"
+#fi
 
-  ./tweet.sh "#Spacetime im @netz39! ($(date "+%Y-%m-%d %H:%M"))"
-
-else
-
-  echo "Already open!"
-
-fi
-  
 echo "/var/www/cgi-bin/color.sh green" | at now + 5 minutes
 ./color.sh green
