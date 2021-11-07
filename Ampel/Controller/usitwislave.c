@@ -362,7 +362,15 @@ void usi_twi_slave(uint8_t slave_address_in, uint8_t use_sleep,
     if(use_sleep && (ss_state == ss_state_before_start))
       sleep_mode();
 
-    if(USISR & _BV(USIPF))
+    /*
+     * This library cannot detect repeated starts and will execute the callback only
+     * after a stop condition.
+     *
+     * Start processing when there is a byte in the input buffer
+     *
+     * WARNING: This means that we process data after one byte sent on I2C!
+     */
+    if((USISR & _BV(USIPF)) || (input_buffer_length > 0))
     {
       cli();
 
