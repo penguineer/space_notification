@@ -1,8 +1,8 @@
 {
   "api": "0.13",
   "space": "Netz39",
-  "logo": "http://www.netz39.de/wiki/_media/resources:public_relations:logo:netz39_logo_2013-07-11.png",
-  "url": "http://www.netz39.de/",
+  "logo": "https://www.netz39.de/wiki/_media/resources:public_relations:logo:netz39_logo_2013-07-11.png",
+  "url": "https://www.netz39.de/",
   "location": {
     "address": "Leibnizstr. 32, 39104 Magdeburg, Germany",
     "lat": 52.119561,
@@ -14,8 +14,8 @@
     "trigger_person": "",
     "message": "",
     "icon": {
-      "open": "http://www.netz39.de/occupied.png",
-      "closed": "http://www.netz39.de/closed.png"
+      "open": "https://www.netz39.de/occupied.png",
+      "closed": "https://www.netz39.de/closed.png"
     }
   },
   "contact": {
@@ -32,11 +32,11 @@
   "feeds": {
     "blog": {
       "type": "rss",
-      "url": "http://www.netz39.de/feed/"
+      "url": "https://www.netz39.de/feed/"
     },
     "calendar": {
       "type": "ical",
-      "url": "http://www.netz39.de/feed/eo-events/"
+      "url": "https://www.netz39.de/feed/eo-events/"
     }
   },
   "ext_door": {
