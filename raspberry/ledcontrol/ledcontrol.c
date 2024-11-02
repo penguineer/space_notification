@@ -17,26 +17,15 @@
 
 #define I2C_ADDR_AMPEL		0x20
 
-const char* SPACEAPI_PATH	= "/var/www/spaceapi.json";
-
-const char* MQTT_HOST 		= "platon";
+const char* MQTT_HOST 		= "platon.n39.eu";
 const int   MQTT_PORT 		= 1883;
-const char* MQTT_DOOR_TOPIC 	= "Netz39/Things/Door/Events";
-const char* MQTT_AMPEL_TOPIC	= "Netz39/Things/Ampel/Light/Events";
-
-#define MQTT_MSG_MAXLEN		  16
-const char* MQTT_MSG_DOOR_OPEN   = "door open";
-const char* MQTT_MSG_DOOR_CLOSE  = "door closed";
-const char* MQTT_MSG_DOOR_LOCKED   = "door locked";
-const char* MQTT_MSG_DOOR_UNLOCKED  = "door unlocked";
-const char* MQTT_MSG_AMPEL	 = "ampel lights NN";
+const char* MQTT_AMPEL_TOPIC	= "Netz39/Things/Ampel/Light";
 
 struct ampel_state_t {
   bool red;
   bool green;
   bool blink;
 };
-
 
 /**
  * Get the milliseconds since epoch.
@@ -168,81 +157,41 @@ uint8_t ampel_set_color(struct ampel_state_t color) {
   return ret;
 }
 
-///// Space Status /////
+///// Command events
 
-/**
- * This is a _very_simple_ method to get the space status:
- * Read at col 12, row 12: There is an f when the space is
- * closed and a t when the space is open.
- *
- * Must be adapted when SpaceAPI format changes.
- *
- * TODO: use a JSON library here!
- */
-bool get_space_status(const char* path) {
-  FILE *f = fopen(path, "r");
-  if (f == NULL)
-    return false;
-  
-  // go to row 12
-  int row = 11;
-  while (row) {
-    char ch = getc(f);
-    if (ch == EOF) break;
-    
-    if (ch == '\n') --row;
-  };
-  
-  // something went wrong
-  if (row) return false;
-
-  // go to column 12
-  int col = 12;
-  while (--col) {
-    char ch = getc(f);
-    if (ch == EOF) break;
-  }
-  
-  // something went wrong
-  if (col) return false;
-  
-  // this is the t(rue) or f(alse) character
-  char ch = getc(f);
-  if (ch == EOF)
-    return 0;
-    
-  fclose(f);
-  
-  return ch == 't';
-}
-
-///// Door events
-
-static bool door_is_locked = false;
-static bool door_is_closed = true;
-
-void mqtt_message_callback(struct mosquitto *mosq, 
+void mqtt_message_callback(struct mosquitto *mosq,
                            void *obj, 
                           const struct mosquitto_message *message)
 {
-  printf("got message '%.*s' for topic '%s'\n", message->payloadlen, (char*) message->payload, message->topic);
+  if (message->payloadlen)
+    printf("got message '%.*s' for topic '%s'\n", message->payloadlen, (char*) message->payload, message->topic);
+  else
+    printf("Got empty message for topic '%s'\n", message->topic);
 
   bool match = false;
-  mosquitto_topic_matches_sub(MQTT_DOOR_TOPIC, message->topic, &match);
+  mosquitto_topic_matches_sub(MQTT_AMPEL_TOPIC, message->topic, &match);
   if (match) {
-    const char* doorstr = message->payload;
+    const char* command = message->payload;
 
-    // obtain door status from messages    
-    door_is_closed = true;
-    door_is_locked = false;
-    
-    if (!strcmp(doorstr, MQTT_MSG_DOOR_OPEN)) {
-      door_is_closed = false;
+    struct ampel_state_t state = { .red = false, .green = false, .blink = false };
+
+    if (!command)
+    {
+      // nop
+    } else if (strcmp(command, "red") == 0) {
+      state.red = true;
+    } else if (strcmp(command, "green") == 0) {
+      state.green = true;
+    } else if (strcmp(command, "red blink") == 0) {
+      state.red = true;
+      state.blink = true;
+    } else if (strcmp(command, "green blink") == 0) {
+      state.green = true;
+      state.blink = true;
     }
-    
-    if (!strcmp(doorstr, MQTT_MSG_DOOR_LOCKED)) {
-      door_is_locked = true;
-    }    
+
+    // Set the traffic light state
+    ampel_set_color(state);
   }
 }
 
@@ -283,95 +232,15 @@ int main(int argc, char *argv[]) {
     }      
   }
   
-  // subscribe to door topic
+  // subscribe to Ampel topic
   if (mosq) {
     mosquitto_message_callback_set(mosq, mqtt_message_callback);
-    mosquitto_subscribe(mosq, NULL, MQTT_DOOR_TOPIC, 0);
+    mosquitto_subscribe(mosq, NULL, MQTT_AMPEL_TOPIC, 0);
   }
 
-  struct ampel_state_t before = {
-    .red = false,
-    .green = false,
-    .blink = false
-  };
-
-  int countdown;
-  
-  char mqtt_payload[MQTT_MSG_MAXLEN];
-  
   char run=1;
   int i=0;
   while(run) {
-    struct ampel_state_t color = before;
-
-    // check space status
-    bool is_open = get_space_status(SPACEAPI_PATH);
-    
-    // manage the countdown
-    if (!is_open && door_is_locked) {
-      if (countdown) --countdown;
-    } else {
-      countdown = 30;
-    }
-    
-    // set ampel according to space status
-    color.red = !is_open && countdown;
-    color.green = is_open;
-    color.blink = door_is_locked;
-
-    printf("****** %u\n", i++);
-    printf("Ampel State:\n");
-    char* on = color.blink ? "Blink" : "On";
-    printf("Red:\t\t%s\n", color.red ? on : "Off");
-    printf("Green:\t\t%s\n", color.green ? on : "Off");
-    printf("Door:\t\t%s\n", door_is_closed ? 
-                            (door_is_locked ? "Locked" : "Closed")
-                            : "Open");
-    printf("Countdown:\t%d s\n", countdown);
-    printf("\n");
-    
-    // set the LEDs
-    ampel_set_color(color);
-
-    // emit MQTT messages
-    mqtt_payload[0] = 0;
-
-    // render MQTT-message based on ampel state
-    if ((before.red != color.red) ||
-        (before.green != color.green) ||
-        (before.blink != color.blink)) {
-        
-      strcpy(mqtt_payload, MQTT_MSG_AMPEL);
-        
-      char b = color.blink ? 'b' : '1';  
-      mqtt_payload[13] = color.red   ? b : '0';
-      mqtt_payload[14] = color.green ? b : '0';      
-    }
-
-    before = color;      
-    
-    // send MQTT message if there is payload
-    if (mqtt_payload[0] && mosq) {
-      int ret;
-      int mid;
-      ret = mosquitto_publish(
-                        mosq, 
-                        &mid,
-                        MQTT_AMPEL_TOPIC,
-                        strlen(mqtt_payload), mqtt_payload,
-                        2, /* qos */
-                        true /* retain */
-                       );
-      if (ret != MOSQ_ERR_SUCCESS)
-        syslog(LOG_ERR, "MQTT error on message \"%s\": %d (%s)", 
-                        mqtt_payload, 
-                        ret,
-                        mosquitto_strerror(ret));
-      else
-        syslog(LOG_INFO, "MQTT message \"%s\" sent with id %d.", 
-                         mqtt_payload, mid);
-    }
-    
     // call the mosquitto loop to process messages
     if (mosq) {
       int ret;
@@ -394,7 +263,7 @@ int main(int argc, char *argv[]) {
   }
   mosquitto_lib_cleanup();
 
-  syslog(LOG_INFO, "Doorstate observer finished.");
+  syslog(LOG_INFO, "Ampel controller finished.");
   closelog();
     
   return 0;
