@@ -2,6 +2,7 @@
 
 #include <syslog.h>
 #include <errno.h>
+#include <string.h>
 
 struct mosquitto *mqtt_service_init(const char *client_id)
 {
@@ -47,4 +48,14 @@ void mqtt_service_cleanup(struct mosquitto *mosq)
         mosquitto_destroy(mosq);
     }
     mosquitto_lib_cleanup();
+}
+
+bool mqtt_payload_equals(const struct mosquitto_message *message,
+                         const char *expected)
+{
+    const size_t expected_len = strlen(expected);
+
+    return message->payload != NULL
+        && message->payloadlen == (int)expected_len
+        && memcmp(message->payload, expected, expected_len) == 0;
 }

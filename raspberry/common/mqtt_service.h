@@ -54,4 +54,22 @@ void mqtt_service_loop(struct mosquitto *mosq, int timeout);
  */
 void mqtt_service_cleanup(struct mosquitto *mosq);
 
+/**
+ * Compare an MQTT message payload with an expected string.
+ *
+ * MQTT payloads are length-delimited byte sequences and are not guaranteed
+ * to be NUL-terminated. This helper performs an exact comparison using the
+ * payload length supplied by libmosquitto.
+ *
+ * The payload matches only if its length is exactly equal to the length of
+ * the expected string and all bytes are equal.
+ *
+ * @param message   MQTT message containing the payload to compare
+ * @param expected  NUL-terminated string to compare against
+ * @return          true if the payload exactly matches expected, false otherwise
+ */
+bool mqtt_payload_equals(const struct mosquitto_message *message,
+                         const char *expected);
+
+
 #endif /* MQTT_SERVICE_H */
