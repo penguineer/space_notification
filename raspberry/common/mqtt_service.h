@@ -3,6 +3,8 @@
 
 #include <mosquitto.h>
 
+#include <stdbool.h>
+
 /**
  * Shared MQTT service infrastructure.
  *
