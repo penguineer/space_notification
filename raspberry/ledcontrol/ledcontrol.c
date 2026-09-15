@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <errno.h>
 #include <unistd.h>
-#include <string.h>
 
 #include "../common/i2c_command.h"
 #include "../common/mqtt_service.h"
@@ -82,21 +81,16 @@ void mqtt_message_callback(struct mosquitto *mosq,
   bool match = false;
   mosquitto_topic_matches_sub(MQTT_AMPEL_TOPIC, message->topic, &match);
   if (match) {
-    const char* command = message->payload;
-
     struct ampel_state_t state = { .red = false, .green = false, .blink = false };
 
-    if (!command)
-    {
-      // nop
-    } else if (strcmp(command, "red") == 0) {
+    if (mqtt_payload_equals(message, "red")) {
       state.red = true;
-    } else if (strcmp(command, "green") == 0) {
+    } else if (mqtt_payload_equals(message, "green")) {
       state.green = true;
-    } else if (strcmp(command, "red blink") == 0) {
+    } else if (mqtt_payload_equals(message, "red blink")) {
       state.red = true;
       state.blink = true;
-    } else if (strcmp(command, "green blink") == 0) {
+    } else if (mqtt_payload_equals(message, "green blink")) {
       state.green = true;
       state.blink = true;
     }

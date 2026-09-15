@@ -3,6 +3,8 @@
 
 #include <mosquitto.h>
 
+#include <stdbool.h>
+
 /**
  * Shared MQTT service infrastructure.
  *
@@ -53,5 +55,23 @@ void mqtt_service_loop(struct mosquitto *mosq, int timeout);
  * @param mosq  mosquitto instance, or NULL
  */
 void mqtt_service_cleanup(struct mosquitto *mosq);
+
+/**
+ * Compare an MQTT message payload with an expected string.
+ *
+ * MQTT payloads are length-delimited byte sequences and are not guaranteed
+ * to be NUL-terminated. This helper performs an exact comparison using the
+ * payload length supplied by libmosquitto.
+ *
+ * A NULL message or NULL payload does not match. The expected string must
+ * not be NULL.
+ *
+ * @param message   MQTT message containing the payload to compare; may be NULL
+ * @param expected  NUL-terminated string to compare against; must not be NULL
+ * @return          true if the payload exactly matches expected, false otherwise
+ */
+bool mqtt_payload_equals(const struct mosquitto_message *message,
+                         const char *expected);
+
 
 #endif /* MQTT_SERVICE_H */
