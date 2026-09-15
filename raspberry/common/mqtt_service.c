@@ -1,9 +1,12 @@
 #include "mqtt_service.h"
 
+#include <mosquitto.h>
+
 #include <syslog.h>
 #include <errno.h>
 #include <string.h>
 #include <assert.h>
+#include <stdbool.h>
 
 struct mosquitto *mqtt_service_init(const char *client_id)
 {
