@@ -68,6 +68,27 @@ uint8_t ampel_set_color(struct ampel_state_t color) {
 }
 
 ///// Command events
+static void mqtt_connect_callback(struct mosquitto *mosq,
+                                  void *obj,
+                                  int rc)
+{
+  if (rc != 0) {
+    syslog(LOG_ERR, "MQTT connection failed: %s",
+           mosquitto_connack_string(rc));
+    return;
+  }
+
+  const int ret = mosquitto_subscribe(
+      mosq, NULL, MQTT_AMPEL_TOPIC, 0);
+
+  if (ret != MOSQ_ERR_SUCCESS) {
+    syslog(LOG_ERR, "MQTT subscribe failed: %s",
+           mosquitto_strerror(ret));
+  } else {
+    syslog(LOG_INFO, "Subscribed to MQTT topic '%s'.",
+           MQTT_AMPEL_TOPIC);
+  }
+}
 
 void mqtt_message_callback(struct mosquitto *mosq,
                            void *obj, 
@@ -111,16 +132,20 @@ int main(int argc, char *argv[]) {
   // initialize MQTT
   struct mosquitto *mosq = mqtt_service_init("ampel");
 
-  if (mosq) {
-    int ret = mqtt_service_connect(mosq, MQTT_HOST, MQTT_PORT, 30);
-    if (ret != MOSQ_ERR_SUCCESS) {
-      mqtt_service_cleanup(mosq);
-      service_stop("Ampel controller finished.");
-      return 1;
-    }
+  if (!mosq) {
+    mqtt_service_cleanup(NULL);
+    service_stop("Failed to initialize MQTT.");
+    return 1;
+  }
 
-    mosquitto_message_callback_set(mosq, mqtt_message_callback);
-    mosquitto_subscribe(mosq, NULL, MQTT_AMPEL_TOPIC, 0);
+  mosquitto_message_callback_set(mosq, mqtt_message_callback);
+  mosquitto_connect_callback_set(mosq, mqtt_connect_callback);
+
+  const int ret = mqtt_service_connect(mosq, MQTT_HOST, MQTT_PORT, 30);
+  if (ret != MOSQ_ERR_SUCCESS) {
+    mqtt_service_cleanup(mosq);
+    service_stop("Ampel controller finished.");
+    return 1;
   }
 
   service_notify_ready();

@@ -39,9 +39,16 @@ void mqtt_service_loop(struct mosquitto *mosq, int timeout)
         return;
 
     const int ret = mosquitto_loop(mosq, timeout, 1);
-    if (ret) {
-        syslog(LOG_ERR, "MQTT loop error, reconnecting.");
-        mosquitto_reconnect(mosq);
+    if (ret != MOSQ_ERR_SUCCESS) {
+        syslog(LOG_WARNING, "MQTT loop error: %s",
+               mosquitto_strerror(ret));
+
+        const int reconnect_ret = mosquitto_reconnect(mosq);
+
+        if (reconnect_ret != MOSQ_ERR_SUCCESS) {
+            syslog(LOG_WARNING, "MQTT reconnect failed: %s",
+                   mosquitto_strerror(reconnect_ret));
+        }
     }
 }
 
